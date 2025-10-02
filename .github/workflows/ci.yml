@@ -49,7 +49,7 @@ jobs:
         uses: docker/metadata-action@v5.0.0
         with:
           images: "${{ env.REGITRY_USER }}/adservice"
-          tags: "${{ env.REGITRY_USER }}:${{ github.sha }}"
+          # tags: "${{ env.REGITRY_USER }}:${{ github.sha }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -59,7 +59,7 @@ jobs:
           # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           push: true
           # tags: '${{ env.REGITRY_USER }}/adservice:latest'
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: "${{ env.REGITRY_USER }}/${{ github.sha }}"
           labels: ${{ steps.meta.outputs.labels }}
 
   # deploy:
