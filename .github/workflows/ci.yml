@@ -59,7 +59,7 @@ jobs:
           # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           push: true
           # tags: '${{ env.REGITRY_USER }}/adservice:latest'
-          tags: ${{ env.REGITRY_USER }}, ${{ github.sha }}, "adservice:latest"
+          tags: ${{ env.REGITRY_USER }}, ${{ github.sha }}, adservice:latest
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push cartservice
@@ -70,7 +70,7 @@ jobs:
           # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           push: true
           # tags: '${{ env.REGITRY_USER }}/adservice:latest'
-          tags: ${{ env.REGITRY_USER }}, ${{ github.sha }}, "cartservice:latest"
+          tags: ${{ env.REGITRY_USER }}, ${{ github.sha }}, cartservice:latest
           labels: ${{ steps.meta.outputs.labels }}
 
   # deploy:
