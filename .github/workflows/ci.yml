@@ -10,6 +10,8 @@ env:
   # REGISTRY: docker.io             # или docker.io для Docker Hub
   # IMAGE_NAME: "nextjsapp5"  # owner/repo
   REGITRY_USER: "alexkkk21" # owner/repo
+  serviceName1: "adservice"
+  serviceName2: "cartservice"
 
 jobs:
   # test:
@@ -48,18 +50,51 @@ jobs:
       - name: Docker Metadata action
         uses: docker/metadata-action@v5.0.0
         with:
-          images: "${{ env.REGITRY_USER }}/adservice"
-          # tags: "${{ env.REGITRY_USER }}:${{ github.sha }}"
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName1 }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: adservice/
-          file: adservice/Dockerfile
+          context: "${{ env.serviceName1 }}/"
+          file: "${{ env.serviceName1 }}/Dockerfile"
           # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           push: true
-          # tags: '${{ env.REGITRY_USER }}/adservice:latest'
-          tags: "${{ env.REGITRY_USER }}/${{ github.sha }}"
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName1 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+  build_cartservice:
+    # needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName2 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName2 }}/"
+          file: "${{ env.serviceName2 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName2 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
   # deploy:
