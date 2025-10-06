@@ -107,7 +107,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName2 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_checkoutservice:
+  build_checkoutservice:
     needs: build_cartservice
     runs-on: ubuntu-latest
     steps:
@@ -142,7 +142,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName3 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_currencyservice:
+  build_currencyservice:
     needs: build_checkoutservice
     runs-on: ubuntu-latest
     steps:
@@ -177,7 +177,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName4 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_emailservice:
+  build_emailservice:
     needs: build_currencyservice
     runs-on: ubuntu-latest
     steps:
@@ -212,7 +212,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName5 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_frontend:
+  build_frontend:
     needs: build_emailservice
     runs-on: ubuntu-latest
     steps:
@@ -247,7 +247,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName6 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_loadgenerator:
+  build_loadgenerator:
     needs: build_frontend
     runs-on: ubuntu-latest
     steps:
@@ -282,7 +282,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName7 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_paymentservice:
+  build_paymentservice:
     needs: build_loadgenerator
     runs-on: ubuntu-latest
     steps:
@@ -317,7 +317,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName8 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_productcatalogservice:
+  build_productcatalogservice:
     needs: build_paymentservice
     runs-on: ubuntu-latest
     steps:
@@ -352,7 +352,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName9 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_recommendationservice:
+  build_recommendationservice:
     needs: build_productcatalogservice
     runs-on: ubuntu-latest
     steps:
@@ -387,7 +387,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName10 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_shippingservice:
+  build_shippingservice:
     needs: build_recommendationservice
     runs-on: ubuntu-latest
     steps:
@@ -422,7 +422,7 @@ jobs:
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName11 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
-    build_shoppingassistantservice:
+  build_shoppingassistantservice:
     needs: build_shippingservice
     runs-on: ubuntu-latest
     steps:
