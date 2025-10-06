@@ -12,6 +12,16 @@ env:
   REGITRY_USER: "alexkkk21" # owner/repo
   serviceName1: "adservice"
   serviceName2: "cartservice"
+  serviceName3: "checkoutservice"
+  serviceName4: "currencyservice"
+  serviceName5: "emailservice"
+  serviceName6: "frontend"
+  serviceName7: "loadgenerator"
+  serviceName8: "paymentservice"
+  serviceName9: "productcatalogservice"
+  serviceName10: "recommendationservice"
+  serviceName11: "shippingservice"
+  serviceName12: "shoppingassistantservice"
 
 jobs:
   # test:
@@ -63,7 +73,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   build_cartservice:
-    # needs: test
+    needs: build_adservice
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -90,11 +100,361 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: "${{ env.serviceName2 }}/srv"
+          context: "${{ env.serviceName2 }}/src"
           file: "${{ env.serviceName2 }}/src/Dockerfile"
           # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
           push: true
           tags: "${{ env.REGITRY_USER }}/${{ env.serviceName2 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_checkoutservice:
+    needs: cartservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName3 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName3 }}/"
+          file: "${{ env.serviceName3 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName3 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_currencyservice:
+    needs: checkoutservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName4 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName4 }}/"
+          file: "${{ env.serviceName4 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName4 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_emailservice:
+    needs: currencyservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName5 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName5 }}/"
+          file: "${{ env.serviceName5 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName5 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_frontend:
+    needs: emailservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName6 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName6 }}/"
+          file: "${{ env.serviceName6 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName6 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_loadgenerator:
+    needs: frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName7 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName7 }}/"
+          file: "${{ env.serviceName7 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName7 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_paymentservice:
+    needs: loadgenerator
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName8 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName8 }}/"
+          file: "${{ env.serviceName8 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName8 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_productcatalogservice:
+    needs: paymentservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName9 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName9 }}/"
+          file: "${{ env.serviceName9 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName9 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_recommendationservice:
+    needs: productcatalogservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName10 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName10 }}/"
+          file: "${{ env.serviceName10 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName10 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_shippingservice:
+    needs: recommendationservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName11 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName11 }}/"
+          file: "${{ env.serviceName11 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName11 }}"
+          labels: ${{ steps.meta.outputs.labels }}
+
+    build_shoppingassistantservice:
+    needs: shippingservice
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.REGITRY_USER }}
+          password: ${{ secrets.DC_TOKEN  }}
+
+        # Extract metadata (tags, labels) for Docker
+      - name: Docker Metadata action
+        uses: docker/metadata-action@v5.0.0
+        with:
+          images: "${{ env.REGITRY_USER }}/${{ env.serviceName12 }}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: "${{ env.serviceName12 }}/"
+          file: "${{ env.serviceName12 }}/Dockerfile"
+          # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          tags: "${{ env.REGITRY_USER }}/${{ env.serviceName12 }}"
           labels: ${{ steps.meta.outputs.labels }}
 
   # deploy:
