@@ -9,7 +9,7 @@ on:
       - main
 jobs:
   call-workflow:
-    uses: ./.github/workflows/reusable.yml@main
+    uses: ./.github/workflows/reusable.yml
     with:
       REGITRY_USER: alexkkk21
       SERVICE_NAME: adservice
