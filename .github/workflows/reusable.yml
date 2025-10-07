@@ -1,50 +1,43 @@
- on:
-      workflow_call:
-        inputs:
-          SERVICE_NAME:
-            required: true
-            type: string
-            description: service to build
-          REGITRY_USER:
-            required: true
-            type: string
-            description: registry user
-        secrets:
-          DC_TOKEN:
-            required: true
-            description: dc token
-
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@v3
-
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v3
-
-            - name: Log in to Container registry
-              uses: docker/login-action@v3
-              with:
-                username: ${{ inputs.REGITRY_USER }}
-                password: ${{ secrets.DC_TOKEN  }}
-
-                # Extract metadata (tags, labels) for Docker
-            - name: Docker Metadata action
-              uses: docker/metadata-action@v5.0.0
-              with:
-                images: "${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}"
-
-            - name: Build and push Docker image
-              uses: docker/build-push-action@v6
-              with:
-                context: "${{ inputs.SERVICE_NAME }}/"
-                file: "${{ inputs.SERVICE_NAME }}/Dockerfile"
-            # platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
-                push: true
-                tags: "${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}"
-                labels: ${{ steps.meta.outputs.labels }}
+---
+on:
+  workflow_call:
+    inputs:
+      SERVICE_NAME:
+        required: true
+        type: string
+        description: service to build
+      REGITRY_USER:
+        required: true
+        type: string
+        description: registry user
+    secrets:
+      DC_TOKEN:
+        required: true
+        description: dc token
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+        - name: Set up QEMU
+          uses: docker/setup-qemu-action@v3
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3
+        - name: Log in to Container registry
+          uses: docker/login-action@v3
+          with:
+            username: ${{ inputs.REGITRY_USER }}
+            password: ${{ secrets.DC_TOKEN  }}
+        - name: Docker Metadata action
+          uses: docker/metadata-action@v5.0.0
+          with:
+            images: ${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}
+        - name: Build and push Docker image
+          uses: docker/build-push-action@v6
+          with:
+            context: ${{ inputs.SERVICE_NAME }}/
+            file: ${{ inputs.SERVICE_NAME }}/Dockerfile
+            push: true
+            tags: ${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}
+            labels: ${{ steps.meta.outputs.labels }}
