@@ -15,16 +15,16 @@ jobs:
       SERVICE_NAME: adservice
     secrets:
       DC_TOKEN: ${{ secrets.DC_TOKEN }}
-  call-workflow-cartservice:
-    needs: call-workflow-adservice
-    uses: ./.github/workflows/reusable.yml
-    with:
-      REGITRY_USER: alexkkk21
-      SERVICE_NAME: cartservice
-    secrets:
-      DC_TOKEN: ${{ secrets.DC_TOKEN }}
+  # call-workflow-cartservice:
+  #   needs: call-workflow-adservice
+  #   uses: ./.github/workflows/reusable.yml
+  #   with:
+  #     REGITRY_USER: alexkkk21
+  #     SERVICE_NAME: cartservice
+  #   secrets:
+  #     DC_TOKEN: ${{ secrets.DC_TOKEN }}
   call-workflow-checkoutservice:
-    needs: call-workflow-cartservice
+    needs: call-workflow-adservice
     uses: ./.github/workflows/reusable.yml
     with:
       REGITRY_USER: alexkkk21
