@@ -1,0 +1,30 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: {{ include "microservice_chart.fullname" . }}
+#   labels:
+#     {{- include "microservice_chart.labels" . | nindent 4 }}
+# spec:
+#   type: {{ .Values.service.type }}
+#   ports:
+#     - port: {{ .Values.service.port }}
+#       targetPort: http
+#       protocol: TCP
+#       name: http
+#   selector:
+#     {{- include "microservice_chart.selectorLabels" . | nindent 4 }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  type: {{ .Values.serviceType }}
+  selector:
+    app: {{ .Values.appName }}
+  ports:
+  - name: grpc
+    port: {{ .Values.servicePort }}
+    targetPort: {{ .Values.containerPort }}

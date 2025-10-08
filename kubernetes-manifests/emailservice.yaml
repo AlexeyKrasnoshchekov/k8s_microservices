@@ -43,7 +43,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: nginx
+          image: alexkkk21/emailservice
           ports:
             - containerPort: 8080
           env:
@@ -82,7 +82,7 @@ spec:
       port: 5000
       targetPort: 8080
 ---
-# apiVersion: v1
-# kind: ServiceAccount
-# metadata:
-#   name: emailservice
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: emailservice
