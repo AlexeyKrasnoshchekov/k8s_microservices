@@ -88,4 +88,4 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: adservice
-  namespace: micro
+  # namespace: micro
