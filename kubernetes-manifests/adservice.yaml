@@ -72,7 +72,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adservice
-  namespace: micro
+  # namespace: micro
   labels:
     app: adservice
 spec:
