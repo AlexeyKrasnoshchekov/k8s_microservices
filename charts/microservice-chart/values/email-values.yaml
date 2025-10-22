@@ -1,0 +1,11 @@
+appName: emailservice
+repoUser: alexkkk21
+appReplicas: 1
+containerPort: 8080
+serviceType: ClusterIP
+servicePort: 5000
+containerEnvVars:
+  - name: PORT
+    value: "8080"
+  - name: DISABLE_PROFILER
+    value: "1"

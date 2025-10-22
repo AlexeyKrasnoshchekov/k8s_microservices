@@ -1,0 +1,10 @@
+replicaCount: 1
+appName: test
+serviceType: ClusterIP
+servicePort: 8082
+containerPort: 8082
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: "1.16.0"

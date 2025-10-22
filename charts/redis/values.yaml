@@ -1,0 +1,11 @@
+appName: redis-cart
+appReplicas: 1
+appNamespace: helm-micro
+replicaCount: 1
+containerPort: 6379
+serviceType: ClusterIP
+servicePort: 6379
+appImage: redis
+appVersion: alpine
+volumeName: redis-data
+containerMountPath: "/data"

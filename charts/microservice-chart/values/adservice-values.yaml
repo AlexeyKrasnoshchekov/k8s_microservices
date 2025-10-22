@@ -1,0 +1,9 @@
+appName: adservice
+repoUser: alexkkk21
+appReplicas: 1
+serviceType: ClusterIP
+servicePort: 9555
+containerPort: 9555
+containerEnvVars:
+  - name: PORT
+    value: "9555"

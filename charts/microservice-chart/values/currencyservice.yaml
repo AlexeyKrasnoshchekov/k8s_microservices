@@ -1,0 +1,11 @@
+appName: currencyservice
+repoUser: alexkkk21
+appReplicas: 1
+serviceType: ClusterIP
+servicePort: 7000
+containerPort: 7000
+containerEnvVars:
+  - name: PORT
+    value: "7000"
+  - name: DISABLE_PROFILER
+    value: "1"

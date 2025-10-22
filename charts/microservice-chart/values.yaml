@@ -1,0 +1,13 @@
+appName: test
+appReplicas: 1
+appVersion: v.0.0.1
+appNamespace: helm-micro
+replicaCount: 1
+containerPort: 8081
+serviceType: ClusterIP
+servicePort: 8081
+containerEnvVars:
+  - name: ENV_VAR_ONE
+    value: "valueone"
+  - name: ENV_VAR_TWO
+    value: "valuetwo"
