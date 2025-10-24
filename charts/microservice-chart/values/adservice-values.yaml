@@ -7,3 +7,7 @@ containerPort: 9555
 containerEnvVars:
   - name: PORT
     value: "9555"
+resourcesReqCpu: 200m
+resourcesReqMem: 64Mi
+resourcesLimCpu: 300m
+resourcesLimMem: 128Mi

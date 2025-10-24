@@ -15,6 +15,13 @@ spec:
       labels:
         app: {{ .Values.appName }}
     spec:
+      serviceAccountName: {{ .Values.appName }}
+      terminationGracePeriodSeconds: 5
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
       - name: {{ .Values.appName }}
         image: "{{ .Values.repoUser }}/{{ .Values.appName }}"
@@ -25,5 +32,47 @@ spec:
         - name: {{ .name }}
           value: {{ .value | quote }}
         {{- end}}
-        
+        {{- if and (ne .Values.appName "frontend") (ne .Values.appName "loadgenerator") }}
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+          grpc:
+            port: {{ .Values.containerPort }}
+        livenessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+          grpc:
+            port: {{ .Values.containerPort }}
+        {{- end }}
+        {{- if eq .Values.appName "frontend" }}
+        readinessProbe:
+          initialDelaySeconds: 10
+          httpGet:
+            path: "/_healthz"
+            port: {{ .Values.containerPort }}
+            httpHeaders:
+              - name: "Cookie"
+                value: "shop_session-id=x-readiness-probe"
+        livenessProbe:
+          initialDelaySeconds: 10
+          httpGet:
+            path: "/_healthz"
+            port: {{ .Values.containerPort }}
+            httpHeaders:
+              - name: "Cookie"
+                value: "shop_session-id=x-liveness-probe"
+        {{- end }}
+        resources:
+            requests:
+              cpu: {{ .Values.resourcesReqCpu }}
+              memory: {{ .Values.resourcesReqMem }}
+            limits:
+              cpu: {{ .Values.resourcesLimCpu }}
+              memory: {{ .Values.resourcesLimMem }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: {{ .Values.appNamespace }}
+  name: {{ .Values.appName }}
       

@@ -8,3 +8,7 @@ containerEnvVars:
     value: "10"
   - name: RATE
     value: "1"
+resourcesReqCpu: 100m
+resourcesReqMem: 64Mi
+resourcesLimCpu: 200m
+resourcesLimMem: 128Mi

@@ -7,3 +7,7 @@ containerPort: 7070
 containerEnvVars:
   - name: REDIS_ADDR
     value: "redis-cart:6379"
+resourcesReqCpu: 200m
+resourcesReqMem: 64Mi
+resourcesLimCpu: 300m
+resourcesLimMem: 128Mi
