@@ -21,8 +21,8 @@ import (
 	"os"
 	"time"
 
-    "github.com/prometheus/client_golang/prometheus"
-    "github.com/prometheus/client_golang/prometheus/promhttp"
+    // "github.com/prometheus/client_golang/prometheus"
+    // "github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"cloud.google.com/go/profiler"
 	"github.com/gorilla/mux"
@@ -114,12 +114,12 @@ func main() {
 	log.Out = os.Stdout
 
 	// Регистрируем метрику в Prometheus
-    prometheus.MustRegister(httpRequestsTotal)
+    // prometheus.MustRegister(httpRequestsTotal)
 
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        httpRequestsTotal.WithLabelValues(r.URL.Path).Inc() // Увеличиваем счетчик при каждом запросе
-        w.Write([]byte("Hello, world!"))
-    })
+    // http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    //     httpRequestsTotal.WithLabelValues(r.URL.Path).Inc() // Увеличиваем счетчик при каждом запросе
+    //     w.Write([]byte("Hello, world!"))
+    // })
 
 	svc := new(frontendServer)
 
