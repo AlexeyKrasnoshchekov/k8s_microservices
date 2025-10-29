@@ -91,13 +91,13 @@ type frontendServer struct {
 }
 
 // Создание счетчика HTTP-запросов
-var httpRequestsTotal = prometheus.NewCounterVec(
-    prometheus.CounterOpts{
-        Name: "http_requests_total",
-        Help: "Total number of HTTP requests",
-    },
-    []string{"path"}, // Лейблы для метрики
-)
+// var httpRequestsTotal = prometheus.NewCounterVec(
+//     prometheus.CounterOpts{
+//         Name: "http_requests_total",
+//         Help: "Total number of HTTP requests",
+//     },
+//     []string{"path"}, // Лейблы для метрики
+// )
 
 func main() {
 	ctx := context.Background()
