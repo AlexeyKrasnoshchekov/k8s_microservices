@@ -8,13 +8,13 @@ on:
     branches:
       - main
 jobs:
-  call-workflow-adservice:
-    uses: ./.github/workflows/reusable.yml
-    with:
-      REGITRY_USER: alexkkk21
-      SERVICE_NAME: adservice
-    secrets:
-      DC_TOKEN: ${{ secrets.DC_TOKEN }}
+  # call-workflow-adservice:
+  #   uses: ./.github/workflows/reusable.yml
+  #   with:
+  #     REGITRY_USER: alexkkk21
+  #     SERVICE_NAME: adservice
+  #   secrets:
+  #     DC_TOKEN: ${{ secrets.DC_TOKEN }}
   # call-workflow-cartservice:
   #   needs: call-workflow-adservice
   #   uses: ./.github/workflows/reusable.yml
@@ -48,7 +48,7 @@ jobs:
   #   secrets:
   #     DC_TOKEN: ${{ secrets.DC_TOKEN }}
   call-workflow-frontend:
-    needs: call-workflow-emailservice
+    # needs: call-workflow-emailservice
     uses: ./.github/workflows/reusable.yml
     with:
       REGITRY_USER: alexkkk21
