@@ -91,21 +91,21 @@ type frontendServer struct {
 }
 
 // Создание счетчика HTTP-запросов
-var (
-    requestCounter = prometheus.NewCounterVec(
-        prometheus.CounterOpts{
-            Name: "myapp_requests_total",
-            Help: "Number of requests received",
-        },
-        []string{"path"},
-    )
-)
+// var (
+//     requestCounter = prometheus.NewCounterVec(
+//         prometheus.CounterOpts{
+//             Name: "myapp_requests_total",
+//             Help: "Number of requests received",
+//         },
+//         []string{"path"},
+//     )
+// )
 
-func init() {
-    prometheus.MustRegister(requestCounter)
-}
+// func init() {
+//     prometheus.MustRegister(requestCounter)
+// }
 
-http.Handle("/metrics", promhttp.Handler())
+// http.Handle("/metrics", promhttp.Handler())
 
 func main() {
 	ctx := context.Background()
