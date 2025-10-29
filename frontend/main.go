@@ -21,6 +21,9 @@ import (
 	"os"
 	"time"
 
+    "github.com/prometheus/client_golang/prometheus"
+    "github.com/prometheus/client_golang/prometheus/promhttp"
+
 	"cloud.google.com/go/profiler"
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
@@ -87,6 +90,15 @@ type frontendServer struct {
 	shoppingAssistantSvcAddr string
 }
 
+// Создание счетчика HTTP-запросов
+var httpRequestsTotal = prometheus.NewCounterVec(
+    prometheus.CounterOpts{
+        Name: "http_requests_total",
+        Help: "Total number of HTTP requests",
+    },
+    []string{"path"}, // Лейблы для метрики
+)
+
 func main() {
 	ctx := context.Background()
 	log := logrus.New()
@@ -100,6 +112,14 @@ func main() {
 		TimestampFormat: time.RFC3339Nano,
 	}
 	log.Out = os.Stdout
+
+	// Регистрируем метрику в Prometheus
+    prometheus.MustRegister(httpRequestsTotal)
+
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        httpRequestsTotal.WithLabelValues(r.URL.Path).Inc() // Увеличиваем счетчик при каждом запросе
+        w.Write([]byte("Hello, world!"))
+    })
 
 	svc := new(frontendServer)
 
