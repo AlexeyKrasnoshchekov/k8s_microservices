@@ -56,6 +56,11 @@ var (
 
 var validEnvs = []string{"local", "gcp", "azure", "aws", "onprem", "alibaba"}
 
+func handler(w http.ResponseWriter, r *http.Request) {
+    requestCounter.WithLabelValues(r.URL.Path).Inc()
+    w.Write([]byte("Hello, Prometheus!"))
+}
+
 func (fe *frontendServer) homeHandler(w http.ResponseWriter, r *http.Request) {
 	log := r.Context().Value(ctxKeyLog{}).(logrus.FieldLogger)
 	log.WithField("currency", currentCurrency(r)).Info("home")

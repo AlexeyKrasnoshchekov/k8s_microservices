@@ -21,8 +21,8 @@ import (
 	"os"
 	"time"
 
-    // "github.com/prometheus/client_golang/prometheus"
-    // "github.com/prometheus/client_golang/prometheus/promhttp"
+    "github.com/prometheus/client_golang/prometheus"
+    "github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"cloud.google.com/go/profiler"
 	"github.com/gorilla/mux"
@@ -91,13 +91,21 @@ type frontendServer struct {
 }
 
 // Создание счетчика HTTP-запросов
-// var httpRequestsTotal = prometheus.NewCounterVec(
-//     prometheus.CounterOpts{
-//         Name: "http_requests_total",
-//         Help: "Total number of HTTP requests",
-//     },
-//     []string{"path"}, // Лейблы для метрики
-// )
+var (
+    requestCounter = prometheus.NewCounterVec(
+        prometheus.CounterOpts{
+            Name: "myapp_requests_total",
+            Help: "Number of requests received",
+        },
+        []string{"path"},
+    )
+)
+
+func init() {
+    prometheus.MustRegister(requestCounter)
+}
+
+http.Handle("/metrics", promhttp.Handler())
 
 func main() {
 	ctx := context.Background()
