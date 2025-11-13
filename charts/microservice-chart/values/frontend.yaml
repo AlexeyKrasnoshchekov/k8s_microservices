@@ -4,7 +4,7 @@ appReplicas: 1
 serviceType: NodePort
 servicePort: 80
 containerPort: 8080
-nodePort: 30008
+nodePort: 30011
 containerEnvVars:
   - name: PORT
     value: "8080"
