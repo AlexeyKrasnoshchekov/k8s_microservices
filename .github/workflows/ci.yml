@@ -48,7 +48,7 @@ jobs:
   #   secrets:
   #     DC_TOKEN: ${{ secrets.DC_TOKEN }}
   call-workflow-frontend:
-    needs: call-workflow-emailservice
+    # needs: call-workflow-emailservice
     uses: ./.github/workflows/reusable.yml
     with:
       REGITRY_USER: alexkkk21

@@ -40,7 +40,7 @@ jobs:
           context: ${{ inputs.SERVICE_NAME }}/
           file: ${{ inputs.SERVICE_NAME }}/Dockerfile
           push: true
-          tags: ${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}
+          tags: ${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}:${GIT_COMMIT}
           labels: ${{ steps.meta.outputs.labels }}
       # - name: Build and push Docker image
       #   if: ${{ inputs.SERVICE_NAME }} == 'cartservice'
