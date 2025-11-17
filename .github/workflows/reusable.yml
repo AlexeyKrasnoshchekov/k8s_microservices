@@ -24,6 +24,9 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Get the short commit SHA
+        id: commit_sha
+        run: echo "COMMIT_SHA=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
       - name: Log in to Container registry
         uses: docker/login-action@v3
         with:
@@ -40,7 +43,7 @@ jobs:
           context: ${{ inputs.SERVICE_NAME }}/
           file: ${{ inputs.SERVICE_NAME }}/Dockerfile
           push: true
-          tags: ${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}:${GIT_COMMIT}
+          tags: ${{ inputs.REGITRY_USER }}/${{ inputs.SERVICE_NAME }}:${{ env.COMMIT_SHA }}
           labels: ${{ steps.meta.outputs.labels }}
       # - name: Build and push Docker image
       #   if: ${{ inputs.SERVICE_NAME }} == 'cartservice'
